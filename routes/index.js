@@ -1,12 +1,13 @@
 var mongoose = require('mongoose');
-var Post = mongoose.model('Post');
-var Comment = mongoose.model('Comment');
-var User = mongoose.model('User');
-
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var jwt = require('express-jwt');
+
+var Post = mongoose.model('Post');
+var Comment = mongoose.model('Comment');
+var User = mongoose.model('User');
+
 var auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
 /* GET home page. */
@@ -41,7 +42,6 @@ router.param('post', function(req, res, next, id) {
 
     req.post = post;
     return next();
-
   });
 });
 
@@ -107,12 +107,12 @@ router.post('/register', function(req, res, next) {
 
   user.username = req.body.username;
 
-  user.setPassword(req.body.password);
+  user.setPassword(req.body.password)
 
   user.save(function(err) {
     if (err) {return next(err);}
 
-    return res.json({token: user.generateJWT()});
+    return res.json({token: user.generateJWT()})
   });
 });
 
